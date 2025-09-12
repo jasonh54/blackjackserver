@@ -4,8 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"nodemon server.js\" \"cd front-end && npm start\" ",
-    "build": "cd front-end && npm run build"
+    "start": "nodemon server.js"
   },
   "author": "",
   "license": "ISC",
