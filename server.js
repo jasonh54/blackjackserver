@@ -23,7 +23,6 @@ mongoose.connect("mongodb+srv://coderstudent1:kjZEkJFir70CXT3Y@cluster0.abd1g.mo
 const accountSchema = mongoose.Schema({
   username: String,
   password: String,
-  email: String,
 });
 
 const deckSchema = mongoose.Schema({
@@ -55,16 +54,15 @@ app.get("/", (req, res) => {
 });
 
 app.post("/api/register", async (req, res) => {
-  const { username, password, email } = req.body;   
-    if (!username || !password || !email) {
+  const { username, password} = req.body;   
+    if (!username || !password) {
         return res.status(400).json({ error: "All fields are required" });
     }
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
         const newAccount = new Account({
             username,
-            password: hashedPassword,
-            email,
+            password: hashedPassword
         });
         await newAccount.save();
         res.status(201).json({ message: "Account created successfully" });
@@ -97,7 +95,7 @@ app.post("/api/login", async (req, res) => {
 app.get("/api/accounts", async (req, res) => {
   try {
     const accounts = await Account.find();
-    res.status(200).json(accounts);
+    res.json(accounts);
   } catch (error) {
     console.error("Error fetching accounts:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -105,7 +103,7 @@ app.get("/api/accounts", async (req, res) => {
 });
 
 app.listen(3001, () => {
-  console.log("Server is running on http://localhost:3000");
+  console.log("Server is running on http://localhost:3001");
 });
 
 
